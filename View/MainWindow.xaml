@@ -1,0 +1,66 @@
+﻿<Window x:Class="TaskManagerSimulator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskManagerSimulator"
+        xmlns:vm="clr-namespace:TaskManagerSimulator.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:ViewModelMain/>
+    </Window.DataContext>
+    <Grid>
+        <ListBox ItemsSource="{Binding Tasks}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border MinHeight="50" MinWidth="50"
+                            BorderBrush="Black" BorderThickness="2"
+                            Background="Azure">
+                        <StackPanel Orientation="Horizontal" Margin="15">
+                            <TextBlock Text="{Binding StartTime, StringFormat=Current time {0}}"
+                                       Margin="10 0"
+                                       TextAlignment="Center"/>
+                            <TextBlock Text="{Binding Description, StringFormat=Task number: {0}}"
+                                       Margin="10 0"
+                                       TextAlignment="Center"/>
+                            <ProgressBar MinWidth="80" MaxHeight="20"
+                                         Margin="10 0"
+                                         Foreground="Green"
+                                         Value="{Binding TaskProgress, TargetNullValue=50}"/>
+
+                            <ComboBox ItemsSource="{Binding Priority}"
+                                      BorderBrush="BlueViolet"
+                                      SelectedItem="{Binding SelectedItem}"
+                                      MaxDropDownHeight="99"
+                                      ScrollViewer.CanContentScroll="False">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="Transparent"
+                                                Padding="5"
+                                                CornerRadius="6"
+                                                Margin="1">
+                                            <TextBlock Text="{Binding}"
+                                                       Foreground="Black"
+                                                       IsHitTestVisible="False"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button
+                                Content="{Binding ButtonContent}"
+                                Command="{Binding ChoiceTaskCommand}"
+                                Margin="10 0"
+                                MinWidth="100"/>
+                            <Button
+                                Content="Cancel"
+                                Margin="10 0"
+                                MinWidth="100"
+                                />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
